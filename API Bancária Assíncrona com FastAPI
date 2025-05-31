@@ -1,0 +1,17 @@
+Stack Tecnológica:
+Python 3.10+
+
+FastAPI
+
+SQLAlchemy (async) + SQLite (simples pra testar, mas pode usar PostgreSQL se quiser)
+
+Pydantic (modelos)
+
+Passlib (hash de senha)
+
+PyJWT (gerar/validar tokens JWT)
+
+Uvicorn (server)
+
+httpx (pra testes, se quiser)
+
