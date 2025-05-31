@@ -1,17 +1,26 @@
-Stack Tecnológica:
-Python 3.10+
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.orm import declarative_base, sessionmaker, relationship
+from sqlalchemy import Column, Integer, String, Float, ForeignKey
 
-FastAPI
+Base = declarative_base()
 
-SQLAlchemy (async) + SQLite (simples pra testar, mas pode usar PostgreSQL se quiser)
+class User(Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True)
+    hashed_password = Column(String)
 
-Pydantic (modelos)
+class Account(Base):
+    __tablename__ = 'accounts'
+    id = Column(Integer, primary_key=True, index=True)
+    owner_id = Column(Integer, ForeignKey('users.id'))
+    balance = Column(Float, default=0.0)
+    owner = relationship("User")
 
-Passlib (hash de senha)
-
-PyJWT (gerar/validar tokens JWT)
-
-Uvicorn (server)
-
-httpx (pra testes, se quiser)
-
+class Transaction(Base):
+    __tablename__ = 'transactions'
+    id = Column(Integer, primary_key=True, index=True)
+    account_id = Column(Integer, ForeignKey('accounts.id'))
+    type = Column(String)  # 'deposit' ou 'withdraw'
+    amount = Column(Float)
+    account = relationship("Account")
